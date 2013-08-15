@@ -28,19 +28,41 @@ window.addEventListener("DOMContentLoaded", function(){
         chooseList.appendChild(makeSelect);
     }
     
+    //Find value of selected checked items:
+    function getSelectedCheckedBoxes() {
+        if ($('fleaValue').checked) {
+            fleaValue = $('fleaValue').value;
+        } else {
+            fleaValue = "No"
+        }
+        if ($('heartwormValue').checked){
+            heartwormValue = $('heartwormValue').value;
+        } else {
+            heartwormValue = "No"
+        }
+        if ($('otherValue').checked) {
+            otherValue = $('otherValue').value;
+        } else{
+            otherValue = "No"
+        }
+    }
+    
+    
+    
     //Create function to submit data.
     function submitData() {
         var generateId =    Math.floor(Math.random()*100000001);
         //Gather up all our form field values and store in an object.
         //Object properties contain array with the form label and input value.
+        getSelectedCheckedBoxes();
         var itemList            = {};
             itemList.fleaRx     = ["Flea Rx:", $('fleaRx').value];
             itemList.petname    = ["Pet Name:", $('petname').value];
             itemList.petage     = ["Pet Age:", $('petage').value];
             itemList.pettype    = ["Pet Type:", $('pettype').value];
-            //itemList.flea       = ["Flea:", fleaValue];
-            //itemList.heartworm  = ["Heartworm:", heartwormValue];
-            //itemList.other      = ["Other:", otherValue];
+            itemList.flea       = ["Flea:", fleaValue];
+            itemList.heartworm  = ["Heartworm:", heartwormValue];
+            itemList.other      = ["Other:", otherValue];
             itemList.date       = ["Date:", $('date').value];
             itemList.range      = ["Range:", $('range').value];
             itemList.note       = ["Note:", $('note').value];
@@ -52,6 +74,7 @@ window.addEventListener("DOMContentLoaded", function(){
     
     //Variable Defaults
     var fleaMedication = ["--Type of Flea Medication--", "Topical", "Oral", "Spray-On"];
+    var fleaCheckBox;
     makeFleaMedOptions();
     
     //Set Link & Submit Click Events
