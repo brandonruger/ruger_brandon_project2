@@ -24,13 +24,12 @@ h1 {
 legend {
     font: 20px "Times New Roman";
     color: white;
+    text-align: center;
     border: 1px solid #000;
     margin-top: 10px;
-    padding: 10px;
+    padding: 5px;
     background-color: blue;
     letter-spacing: 0.5em;
-    
-
     
 }
 
