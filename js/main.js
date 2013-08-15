@@ -118,6 +118,17 @@ window.addEventListener("DOMContentLoaded", function(){
         
     }
     
+    function clearLocalStorage() {
+        if (localStorage.length === 0) {
+            alert("There is no data to clear.")
+        } else {
+            localStorage.clear();
+            alert("All Reminders have been deleted!");
+            window.location.reload();
+            return false;
+        }
+    }
+    
     //Variable Defaults
     var fleaMedication = ["--Type of Flea Medication--", "Topical", "Oral", "Spray-On"];
     var fleaCheckBox;
@@ -127,8 +138,8 @@ window.addEventListener("DOMContentLoaded", function(){
     
     var displayData = $('displayData');
     displayData.addEventListener("click", getDataFromStorage);
-    /*var clearData = $('clearData');
-    clearData.addEventListener("click", clearLocalStorage);*/
+    var clearData = $('clearData');
+    clearData.addEventListener("click", clearLocalStorage);
     var createButton = $('button');
     createButton.addEventListener("click", "submitData");
     
