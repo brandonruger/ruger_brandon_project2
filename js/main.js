@@ -14,7 +14,7 @@ window.addEventListener("DOMContentLoaded", function(){
     
     
     //Variable Defaults
-    var contactGroups = ["--Choose A Group--", "Friends", "Family", "Work"];
+    var fleaMedication = ["--Type of Flea Medication--", "Topical", "Oral", "Spray-On"];
     
     
     //Set Link & Submit Click Events
