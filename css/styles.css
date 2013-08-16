@@ -12,12 +12,12 @@ h1 {
     color: red;
     font: 36px "Times New Roman";
     text-align: center;
-    text-transform: capitalize;
+    text-transform: uppercase;
     margin: 20px;
     padding: 10px;
     border: 1px solid #000;
     background-color:  blue;
-    
+    text-decoration: blink;
     
 }
 
@@ -35,7 +35,7 @@ legend {
 
 li {
     font: 14px "Arial";
-    
+    list-style: lower-roman;
 }
 
 input {
@@ -44,13 +44,12 @@ input {
     
 }
 
-
-
 a{
     text-align: center;
-    
-    
+       
 }
+
+a:hover{color: white; outline: groove;}
 
 select {
     margin-left: 10px;

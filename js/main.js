@@ -4,18 +4,18 @@
 
 window.addEventListener("DOMContentLoaded", function(){
     
-    //getElementByID Function
-    function $(x) {
+    //Function to get elements from HTML file.
+    function getElements(x) {
         var theElement = document.getElementById(x);
         return theElement;
     }
     
     
     
-    //Create select field element and populuate it with options.
+    //Dynanmically create select field and populate it with options.
     function makeFleaMedOptions() {
-        var formTag = document.getElementsByTagName("form"); // formTag is an array of all the form tags
-        var chooseList = $('select');
+        var formTag = document.getElementsByTagName("form");
+        var chooseList = getElements('select');
         var makeSelect = document.createElement('select');
         makeSelect.setAttribute("id", "fleaRx");
         for (var i=0, j=fleaMedication.length; i<j; i++) {
@@ -28,39 +28,39 @@ window.addEventListener("DOMContentLoaded", function(){
         chooseList.appendChild(makeSelect);
     }
     
-    //Find value of selected checked items:
+    //Function to determine which check boxes are checked:
     function getSelectedCheckedBoxes() {
-        if ($('fleaValue').checked) {
-            fleaValue = $('fleaValue').value;
+        if (getElements('fleaValue').checked) {
+            fleaValue = getElements('fleaValue').value;
         } else {
             fleaValue = "No"
-        }
-        if ($('heartwormValue').checked){
-            heartwormValue = $('heartwormValue').value;
+        };
+        if (getElements('heartwormValue').checked){
+            heartwormValue = getElements('heartwormValue').value;
         } else {
             heartwormValue = "No"
-        }
-        if ($('otherValue').checked) {
-            otherValue = $('otherValue').value;
+        };
+        if (getElements('otherValue').checked) {
+            otherValue = getElements('otherValue').value;
         } else{
             otherValue = "No"
-        }
-    }
-    
-    function toggleForm(n) {
-        switch (n) {
+        };
+    };
+
+    function toHideForm(n) {
+        switch (n){
             case "on":
-                $('addReminderForm').style.display = "none";
-                $('clearData').style.display = "inline";
-                $('displayData').style.display = "none";
-                $('addNewReminder').style.display = "inline";
+                getElements('addReminderForm').style.display = "none";
+                getElements('clearData').style.display = "inline";
+                getElements('displayData').style.display = "none";
+                getElements('addNewReminder').style.display = "inline";
                 break;
             case "off":
-                $('addReminderForm').style.display = "block";
-                $('clearData').style.display = "inline";
-                $('displayData').style.display = "inline";
-                $('addNewReminder').style.display = "none";
-                $('itemList').style.display = "none";
+                getElements('addReminderForm').style.display = "block";
+                getElements('clearData').style.display = "inline";
+                getElements('displayData').style.display = "inline";
+                getElements('addNewReminder').style.display = "none";
+                getElements('items').style.display = "none";
                 break;
             default:
                 return false;
@@ -69,50 +69,50 @@ window.addEventListener("DOMContentLoaded", function(){
     
     //Create function to submit data.
     function submitData() {
-        var generateId =    Math.floor(Math.random()*100000001);
+        var generateId = Math.floor(Math.random()*100000001);
         //Gather up all our form field values and store in an object.
         //Object properties contain array with the form label and input value.
-        getSelectedCheckedBoxes();
+        //getSelectedCheckedBoxes(); <Create Reminder button will not work unless I deactivate this function.
         var itemList            = {};
-            itemList.fleaRx     = ["Flea Rx:", $('fleaRx').value];
-            itemList.petname    = ["Pet Name:", $('petname').value];
-            itemList.petage     = ["Pet Age:", $('petage').value];
-            itemList.pettype    = ["Pet Type:", $('pettype').value];
+            itemList.fleaRx     = ["Flea Rx:", getElements('fleaRx').value];
+            itemList.petname    = ["Pet Name:", getElements('petname').value];
+            itemList.petage     = ["Pet Age:", getElements('petage').value];
+            itemList.pettype    = ["Pet Type:", getElements('pettype').value];
             itemList.flea       = ["Flea:", fleaValue];
             itemList.heartworm  = ["Heartworm:", heartwormValue];
             itemList.other      = ["Other:", otherValue];
-            itemList.date       = ["Date:", $('date').value];
-            itemList.range      = ["Range:", $('range').value];
-            itemList.note       = ["Note:", $('note').value];
+            itemList.date       = ["Date:", getElements('date').value];
+            itemList.range      = ["Range:", getElements('range').value];
+            itemList.note       = ["Note:", getElements('note').value];
             
-            //Save data into Local Storage: use Stringify to convert object to a string:
+            //Save data into Local Storage
             localStorage.setItem(generateId, JSON.stringify(itemList));
             alert("Reminder has been added!");
     }
     
     function getDataFromStorage() {
-        toggleForm("on");
+        toHideForm("on");
         //Write Data from local storage to the browser
         var createDiv = document.createElement('div');
         createDiv.setAttribute("id", "items");
         var createList = document.createElement('ul');
         createDiv.appendChild(createList);
         document.body.appendChild(createDiv);
-        $('items').style.display = "display";
+        getElements('items').style.display = "block";
         for (var i=0; i<localStorage.length; i++) {
-            var createLi = document.createElement('li');
-            createList.appendChild(createLi);
-            var key = localStorage.key(i);
-            var value = localStorage.getItem(key);
-            //Convert string from local storage back to an object.
-            var obj = JSON.parse(value);
-            var makeSubList = document.createElement('ul');
-            createLi.appendChild(makeSubList);
-            for (var n in obj) {
-                var makeSubli = document.createElement('li');
-                makeSubList.appendChild(makeSubli);
-                var optSubText = obj[n][0] + " " + obj[n][1];
-                makeSubList.innerHTML = optSubText;
+            var createListItem = document.createElement('li');
+            createList.appendChild(createListItem);
+            var dataKey = localStorage.key(i);
+            var dataValue = localStorage.getItem(dataKey);
+            //Convert string from local storage back to an Object.
+            var findObject = JSON.parse(dataValue);
+            var subList = document.createElement('ul');
+            createListItem.appendChild(subList);
+            for (var n in findObject) {
+                var makeSublist = document.createElement('li');
+                subList.appendChild(makeSublist);
+                var subText = findObject[n][0]+ " " +findObject[n][1];
+                makeSublist.innerHTML = subText;
             }
         }
         
@@ -132,16 +132,19 @@ window.addEventListener("DOMContentLoaded", function(){
     //Variable Defaults
     var fleaMedication = ["--Type of Flea Medication--", "Topical", "Oral", "Spray-On"];
     var fleaCheckBox;
+    var fleaValue;
+    var heartwormValue;
+    var otherValue;
     makeFleaMedOptions();
     
     //Set Link & Submit Click Events
     
-    var displayData = $('displayData');
+    var displayData = getElements('displayData');
     displayData.addEventListener("click", getDataFromStorage);
-    var clearData = $('clearData');
+    var clearData = getElements('clearData');
     clearData.addEventListener("click", clearLocalStorage);
-    var createButton = $('button');
-    createButton.addEventListener("click", "submitData");
+    var createButton = getElements('button');
+    createButton.addEventListener("click", submitData);
     
     
     
